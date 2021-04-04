@@ -1,0 +1,27 @@
+---
+version: 2.1
+
+executors:
+  go:
+    docker:
+    - image: circleci/golang:1.14
+jobs:
+  release-docker:
+    executor: go
+    steps:
+    - checkout
+    - setup_remote_docker:
+        docker_layer_caching: false
+    - run:
+        command: |
+          echo $GITHUB_TOKEN | docker login ghcr.io -u erebusit --password-stdin
+          docker build -t bd-reporter:latest .
+          docker tag bd-reporter:latest ghcr.io/erebusit/bd-reporter:latest
+          docker push ghcr.io/erebusit/bd-reporter:latest
+        name: Build, Tag and Push
+workflows:
+  main:
+    jobs:
+    - release-docker:
+        context:
+        - Global
