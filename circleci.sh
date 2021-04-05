@@ -38,4 +38,4 @@ STATUS="${S:=success}"
 
 PAYLOAD="{\"project\":\"$PROJECT\", \"version\": \"$VERSION\", \"status\": \"$STATUS\", \"environment\": \"$ENVIRONMENT\"}"
 
-curl -X POST -H "Authorization: ApiKey $BD_TOKEN" https://deployments.eu.quickci.io/deployments --data "$PAYLOAD"
+curl -X POST -H "Authorization: apikey $BD_TOKEN" https://deployments.eu.quickci.io/deployments --data "$PAYLOAD"
